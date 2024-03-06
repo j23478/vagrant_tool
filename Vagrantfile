@@ -1,11 +1,13 @@
 host_list = [
     {
-        :name => "ansible-manager",
-        :networkFile => "00-installer-1-config.yaml"
+        :name => "ansible-worker",
+        :networkFile => "00-installer-2-config.yaml",
+        :ip => "10.0.3.3"
     },
     {
-        :name => "ansible-worker",
-        :networkFile => "00-installer-2-config.yaml"
+        :name => "ansible-manager",
+        :networkFile => "00-installer-1-config.yaml",
+        :ip => "10.0.3.2"
     }
 ]
 
@@ -15,7 +17,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "tranphuquy19/ubuntu-22.04-desktop"
   config.vm.box_version = "1.1.0"
   config.ssh.insert_key = false # can use the same private key to ssh
-  config.vbguest.iso_path = "./VBoxGuestAdditions_6.1.36.iso"
+  config.vbguest.iso_path = "./VBoxGuestAdditions_6.1.38.iso"
   config.vbguest.auto_update = false
   # 區域
   # 多台 vm
@@ -42,8 +44,20 @@ Vagrant.configure("2") do |config|
             end
             # copy network setting to guest
             host.vm.provision "file", source: "./#{item[:networkFile]}", destination: "/tmp/#{item[:networkFile]}"
-            host.vm.provision "shell",inline: "mv /tmp/#{item[:networkFile]} /etc/netplan/#{item[:networkFile]}"
-            host.vm.provision "shell", inline: "sudo netplan apply"
+            host.vm.provision "shell", inline: "mv /tmp/#{item[:networkFile]} /etc/netplan/#{item[:networkFile]}"
+            host.vm.provision "shell", inline: "netplan apply"
+
+            # set /etc/hosts to ansible-manager
+            if item[:name] == "ansible-manager"
+                host_list.each do |elem|
+                    if elem[:name] != "ansible-manager"
+                        host.vm.provision "shell" do |s|
+                            s.args = ["setHost", elem[:ip], elem[:name]]
+                            s.path = "ssh.sh"
+                        end
+                    end
+                end
+            end
         end
     end
 end

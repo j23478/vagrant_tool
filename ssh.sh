@@ -2,7 +2,15 @@
 doSetHost(){
     ip=$2
     hostname=$3
-    echo $ip  $hostname #>> /etc/hosts
+    echo $ip  $hostname >> /etc/hosts
+}
+
+doSetSSH(){
+    ssh-keygen -f ~/.ssh/id_rsa -N ""
+    ip=$2
+    targetHostName=$3
+    ssh-cpoy-id -i .ssh/id_rsa targetHostName
+
 }
 
 command=$1
@@ -14,5 +22,3 @@ case $command in
 		doSetSSH "$@"
 		;;
 esac
-
-read  -n 1 -p "Input Selection:" mainmenuinput
