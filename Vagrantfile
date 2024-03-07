@@ -53,7 +53,12 @@ Vagrant.configure("2") do |config|
                     if elem[:name] != "ansible-manager"
                         host.vm.provision "shell" do |s|
                             s.args = ["setHost", elem[:ip], elem[:name]]
-                            s.path = "ssh.sh"
+                            s.path = "utils.sh"
+                        end
+                        host.vm.provision "shell" do |s|
+                            s.privileged=false
+                            s.args = ["setSSH", elem[:name]]
+                            s.path = "utils.sh"
                         end
                     end
                 end
