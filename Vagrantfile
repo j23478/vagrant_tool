@@ -49,8 +49,6 @@ Vagrant.configure("2") do |config|
 
             # set /etc/hosts to ansible-manager
             if item[:name] == "ansible-manager"
-                #host.vm.provision "shell", inline: "sudo apt-get install sshpass -y", privileged: false
-                # host.vm.provision "shell", inline: "ssh-keygen -b 2048 -t rsa -f /home/vagrant/.ssh/id_rsa -q -N ''", privileged: false
                 host.vm.provision "file", source: "./cert/id_rsa", destination: "/home/vagrant/.ssh/id_rsa"
                 host.vm.provision "file", source: "./cert/id_rsa.pub", destination: "/home/vagrant/.ssh/id_rsa.pub"
                 host.vm.provision "shell", inline: "chmod 600 /home/vagrant/.ssh/*"
@@ -61,7 +59,6 @@ Vagrant.configure("2") do |config|
                             s.args = ["setHost", elem[:ip], elem[:name]]
                             s.path = "utils.sh"
                         end
-                        #host.vm.provision "shell", inline: "sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no vagrant@#{elem[:name]}", privileged: false
                     end
                 end
             else
