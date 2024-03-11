@@ -2,12 +2,12 @@ host_list = [
     {
         :name => "ansible-worker",
         :networkFile => "00-installer-2-config.yaml",
-        :ip => "10.0.3.3"
+        :ip => "10.0.3.4"
     },
     {
         :name => "ansible-manager",
         :networkFile => "00-installer-1-config.yaml",
-        :ip => "10.0.3.2"
+        :ip => "10.0.3.3"
     }
 ]
 
@@ -46,25 +46,17 @@ Vagrant.configure("2") do |config|
             host.vm.provision "file", source: "./#{item[:networkFile]}", destination: "/tmp/#{item[:networkFile]}"
             host.vm.provision "shell", inline: "mv /tmp/#{item[:networkFile]} /etc/netplan/#{item[:networkFile]}"
             host.vm.provision "shell", inline: "netplan apply"
+			host.vm.provision "file", source: "./utils.sh", destination: "/home/vagrant/utils.sh"
+			host.vm.provision "shell", inline: "chmod 777 /home/vagrant/utils.sh"
 
             # set /etc/hosts to ansible-manager
             if item[:name] == "ansible-manager"
-                host.vm.provision "file", source: "./cert/id_rsa", destination: "/home/vagrant/.ssh/id_rsa"
-                host.vm.provision "file", source: "./cert/id_rsa.pub", destination: "/home/vagrant/.ssh/id_rsa.pub"
-                host.vm.provision "shell", inline: "chmod 600 /home/vagrant/.ssh/*"
-
                 host_list.each do |elem|
                     if elem[:name] != "ansible-manager"
-                        host.vm.provision "shell" do |s|
-                            s.args = ["setHost", elem[:ip], elem[:name]]
-                            s.path = "utils.sh"
-                        end
+						host.vm.provision "shell", inline: ". /home/vagrant/utils.sh setHost #{elem[:ip]} #{elem[:name]}"
+						host.vm.provision "shell", inline: ". /home/vagrant/utils.sh setSSH #{elem[:name]}", privileged: false
                     end
                 end
-            else
-                host.vm.provision "file", source: "./cert/id_rsa.pub", destination: "/home/vagrant/Desktop/id_rsa.pub"
-                host.vm.provision "shell", inline: "cat /home/vagrant/Desktop/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys", privileged: false
-            
             end
         end
     end
