@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
 			host.vm.provision "shell", inline: "chmod 777 /home/vagrant/utils.sh"
 
             if item[:name] == "ansible-manager"
+                host.vm.provision "shell", inline: ". /home/vagrant/utils.sh initMaster"
                 host_list.each do |elem|
                     if elem[:name] != "ansible-manager"
 						# set /etc/hosts to ansible-manager

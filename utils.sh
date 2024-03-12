@@ -6,16 +6,21 @@ doSetHost(){
 }
 
 doSetSSH(){
-    keyFileName=ansible_manager
     keyPath="/home/vagrant/.ssh/id_rsa"
     targetHostName=$2
 
     if [ ! -e $keyPath ];then
         ssh-keygen -b 2048 -t rsa -f $keyPath -q -N ""
     fi
-
-    sudo apt-get install sshpass -y
     sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no "vagrant@${targetHostName}"
+}
+
+doinitMaster(){
+    sudo apt update -y
+    sudo apt-get install software-properties-common -y
+    sudo add-apt-repository --yes --update ppa:ansible/ansible
+    sudo apt-get install ansible -y
+    sudo apt-get install sshpass -y
 }
 
 command=$1
@@ -26,4 +31,7 @@ case $command in
 	setSSH)
 		doSetSSH "$@"
 		;;
+    initMaster)
+        doinitMaster "$@"
+        ;;
 esac
