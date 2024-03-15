@@ -1,0 +1,40 @@
+- name: Install m8s
+  hosts: all
+  connection: local
+  become: yes
+  tasks:
+    - name: Install m8s
+      community.general.snap:
+        classic: true
+        name:
+         - microk8s
+
+    # TODO: must wait for m8s , microk8s status --wait-ready
+    # TODO: must add vagrant user to k8s group
+
+    - name: Get microk8s join token
+      shell: microk8s.add-node
+      register: join_output
+      when: inventory_hostname == "localhost"
+
+      
+    - name: set join_out to fact
+      ansible.builtin.set_fact:
+        join_command: "{{ join_output.stdout_lines[1] }}"
+      when: inventory_hostname == "localhost"
+
+    - name: Install m8s worker
+      connection: ssh
+      community.general.snap:
+        classic: true
+        name:
+         - microk8s
+
+    # TODO: must wait for m8s , microk8s status --wait-ready
+    # TODO: must add vagrant user to k8s group
+    
+    - name: Join m8s cluster
+      connection: ssh
+      ansible.builtin.command:
+        cmd: "{{ hostvars['localhost']['join_command'] }}" 
+      when: inventory_hostname == "ansible-worker"
