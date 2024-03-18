@@ -19,6 +19,9 @@ Vagrant.configure("2") do |config|
   	config.ssh.insert_key = false # can use the same private key to ssh
   	config.vbguest.iso_path = "./VBoxGuestAdditions_6.1.38.iso"
   	config.vbguest.auto_update = false
+    
+    # ansible tool dir
+    config.vm.synced_folder "./ansible_tool", "/home/vagrant/Desktop/ansible_tool", automount: true
 	
 	host_list.each do |item|
         config.vm.define item[:name] do |host|
