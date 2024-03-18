@@ -1,12 +1,14 @@
-all:
-  hosts:
-    ansible-manager:
-    ansible-worker:
-
 manager:
   hosts:
     ansible-manager:
+      ansible_connection: local
 
-worker:
+workers:
   hosts:
     ansible-worker:
+      ansible_connection: ssh
+
+all:
+  children:
+    manager:
+    workers:

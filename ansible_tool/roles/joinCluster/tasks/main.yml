@@ -1,0 +1,18 @@
+- name: Get microk8s join token
+  shell: microk8s.add-node
+  register: join_output
+  when: inventory_hostname == "ansible-manager"
+  changed_when: false
+  delegate_to: ansible-manager
+      
+- name: Set join_out to fact
+  ansible.builtin.set_fact:
+    join_command: "{{ join_output.stdout_lines[1] }}"
+  when: inventory_hostname == "ansible-manager"
+  delegate_to: ansible-manager
+
+- name: Join m8s cluster
+  ansible.builtin.command:
+    cmd: "{{ hostvars['ansible-manager']['join_command'] }}" 
+  when: "'ansible-worker' in inventory_hostname"
+  delegate_to: "{{ inventory_hostname }}"

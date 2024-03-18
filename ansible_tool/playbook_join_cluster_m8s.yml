@@ -1,6 +1,6 @@
-- name: Install m8s
+- name: join ckuster m8s
   hosts: all
   become: yes
   tasks:
     - include_role:
-       name: installM8s
+        name: joinCluster
