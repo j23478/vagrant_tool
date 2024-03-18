@@ -2,3 +2,11 @@ all:
   hosts:
     ansible-manager:
     ansible-worker:
+
+manager:
+  hosts:
+    ansible-manager:
+
+worker:
+  hosts:
+    ansible-worker:

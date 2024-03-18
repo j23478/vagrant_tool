@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   	config.vbguest.auto_update = false
     
     # ansible tool dir
-    config.vm.synced_folder "./ansible_tool", "/home/vagrant/Desktop/ansible_tool", automount: true
+    config.vm.synced_folder "./ansible_tool", "/home/vagrant/Desktop/ansible_tool", automount: true, mount_options: ["dmode=770", "fmode=770"]
 	
 	host_list.each do |item|
         config.vm.define item[:name] do |host|
