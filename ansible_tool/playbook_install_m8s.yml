@@ -9,7 +9,6 @@
         name:
          - microk8s
 
-    # TODO: must wait for m8s , microk8s status --wait-ready
     # TODO: must add vagrant user to k8s group
 
     - name: Get microk8s join token
@@ -29,8 +28,7 @@
         classic: true
         name:
          - microk8s
-
-    # TODO: must wait for m8s , microk8s status --wait-ready
+         
     # TODO: must add vagrant user to k8s group
     
     - name: Join m8s cluster
