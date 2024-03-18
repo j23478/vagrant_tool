@@ -5,7 +5,7 @@ manager:
 
 workers:
   hosts:
-    ansible-worker:
+    ansible-worker1:
       ansible_connection: ssh
 
 all:

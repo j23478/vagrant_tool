@@ -10,4 +10,19 @@
 ```
 - Add NAT Network
 -- Create a NAT Network
--- Disable DHCP  
+-- Disable DHCP
+
+## Steps
+- Vagrant
+```shell
+    $ vagrant up
+    $ vagrant ssh ansible-manager
+    ansible-manager$ cd /Desktop/ansible_tool
+    ansible-manager$ ansible-playbook playbook_install_m8s.yml
+    ansible-manager$ ansible-playbook playbook_join_cluster_m8s.yml
+```
+
+## Add nodes
+- add a new netplan yml
+- add metadata to Vagrantfile
+- add node to inventory.yml

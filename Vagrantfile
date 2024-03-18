@@ -1,6 +1,6 @@
 host_list = [
     {
-        :name => "ansible-worker",
+        :name => "ansible-worker1",
         :networkFile => "00-installer-2-config.yaml",
         :ip => "10.0.3.4"
     },
