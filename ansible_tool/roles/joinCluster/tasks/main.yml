@@ -13,6 +13,6 @@
 
 - name: Join m8s cluster
   ansible.builtin.command:
-    cmd: "{{ hostvars['ansible-manager']['join_command'] }}" 
+    cmd: "{{ hostvars['ansible-manager']['join_command'] }} --worker" 
   when: "'ansible-worker' in inventory_hostname"
   delegate_to: "{{ inventory_hostname }}"

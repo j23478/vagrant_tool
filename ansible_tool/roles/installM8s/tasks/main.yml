@@ -7,7 +7,10 @@
   register: install_result
 
 - name: Wait for m8s to be ready
-  include_tasks: wait.yml
+  ansible.builtin.command: microk8s.status --wait-ready
+  register: status_result
+  changed_when: false
+  failed_when: status_result.stdout_lines[0] != "microk8s is running"
   when: "'snaps_installed' in install_result"
 
 - name: Add user vagrant to the microk8s group
