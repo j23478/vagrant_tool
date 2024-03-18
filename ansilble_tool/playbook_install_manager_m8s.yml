@@ -1,0 +1,5 @@
+- name: Install manager m8s
+  hosts: ansible-manager
+  tasks:
+   - include_role:
+       name: installM8s

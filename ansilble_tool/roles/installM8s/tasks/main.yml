@@ -1,0 +1,11 @@
+- name: Install m8s
+  community.general.snap:
+    classic: true
+    channel: 1.28/stable
+    name:
+      - microk8s
+
+- name: Wait for m8s to be ready
+  ansible.builtin.command: microk8s.status --wait-ready
+  register: m8s_status
+  

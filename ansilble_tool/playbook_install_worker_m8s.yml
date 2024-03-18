@@ -1,0 +1,5 @@
+- name: Install worker m8s
+  hosts: ansible-worker
+  tasks:
+   - include_role:
+       name: installM8s
