@@ -1,0 +1,5 @@
+- name: add on m8s
+  hosts: manager
+  tasks:
+    - include_role:
+        name: m8sAddon

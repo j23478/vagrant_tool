@@ -1,0 +1,11 @@
+- name: m8s enable dashboard
+  ansible.builtin.command: microk8s.enable dashboard 
+
+- name: m8s enable rbac
+  ansible.builtin.command: microk8s.enable rbac
+
+- name: m8s enable ingress
+  ansible.builtin.command: microk8s.enable ingress
+
+- name: m8s enable observability
+  ansible.builtin.command: microk8s.enable observability
