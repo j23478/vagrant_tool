@@ -1,0 +1,6 @@
+- name: Install Docker
+  hosts: all
+  become: yes
+  tasks:
+    - include_role:
+       name: installDocker
