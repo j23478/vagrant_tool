@@ -1,0 +1,8 @@
+- name: Set Registry Host
+  hosts: all
+  become: yes
+  tasks:
+    - include_role:
+        name: setRegistryHost
+      vars:
+        master_node_ip: "{{ hostvars['ansible-manager']['ansible_facts']['default_ipv4']['address'] }}"

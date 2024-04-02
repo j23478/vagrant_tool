@@ -1,0 +1,17 @@
+- name:  Create directory for hosts.toml
+  ansible.builtin.file:
+    path: /var/snap/microk8s/current/args/certs.d/{{ master_node_ip }}:32000
+    state: directory
+    mode: '0755'
+
+- name: Set hosts.toml
+  template:
+    src: hosts.toml.j2
+    dest: /var/snap/microk8s/current/args/certs.d/{{ master_node_ip }}:32000/hosts.toml  # Replace with the desired path
+    mode: '0644'
+
+- name: Stop microk8s
+  ansible.builtin.command: microk8s.stop
+
+- name: Start microk8s
+  ansible.builtin.command: microk8s.start
