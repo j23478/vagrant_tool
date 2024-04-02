@@ -27,8 +27,6 @@
 	$  ansible-playbook  playbook_install_m8s.yml
 	$  ansible-playbook  playbook_join_cluster_m8s.yml
 	$  ansible-playbook  playbook_add_on_m8s.yml
-	$  ansible-playbook  playbook_install_docker.yml
-	$  ansible-playbook  playbook_set_registry_host.yml
 	```
 - Install Docker to build image locally and set hosts.toml to push to build-in registry
 	```shell
