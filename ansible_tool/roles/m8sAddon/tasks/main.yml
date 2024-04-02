@@ -9,3 +9,6 @@
 
 - name: m8s enable observability
   ansible.builtin.command: microk8s.enable observability
+
+- name: m8s enable registry
+  ansible.builtin.command: microk8s.enable registry

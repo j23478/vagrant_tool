@@ -1,3 +1,4 @@
+
 - name: Install ca-certificates and curl
   ansible.builtin.apt:
     name:
@@ -38,3 +39,9 @@
     name: docker-ce
     update_cache: True
 
+- name:  Configure the Docker daemon VM insecure registry
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+    mode: '0777'
+  notify: Restart Docker service
