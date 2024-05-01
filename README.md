@@ -6,7 +6,7 @@
 	 - Install virtualbox
 	 - Install vagrant
  - Create a NAT Network Named NatNetwork2 (virtualbox)
-	 - 喜好設定 -> 網路 -> NAT 網路 -> Disable DHCP
+	 - 喜好設定 -> 網路 -> NAT 網路 -> Disable DHCP and set CIDR
          - ![image](https://github.com/j23478/vagrant_tool/assets/48316812/f8dc4739-033f-4fee-ac48-094a24dbd01f)
  - Download VBoxGuestAdditions_6.1.38.iso
 	 - https://download.virtualbox.org/virtualbox/6.1.38/
